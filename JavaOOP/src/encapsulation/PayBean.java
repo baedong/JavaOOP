@@ -6,14 +6,20 @@ public class PayBean {
 	
 	//멤버필드
 	private String name;
-	private int salary,tax,money;
+	private int salary;
 	
 	//멤버메소드
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getName() {
+		return name;
+	}
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+	public int getSalary() {
+		return salary;
 	}
 	public int getTax() {
 		int tax=0;
