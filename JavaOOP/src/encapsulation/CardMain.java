@@ -12,17 +12,14 @@ public class CardMain {
 		 * 홍길동 : 7
 		 */
 		Scanner scanner = new Scanner(System.in);
-		int card1=0,card2=0;
-		String name1 = "", name2= "";
+				
 		System.out.println("1번째 이름 입력 : ");
-		name1 = scanner.next();
+		CardBean hong = new CardBean(scanner.next());
 		System.out.println("2번째 이름 입력 : ");
-		name2 = scanner.next();
-		
-		CardBean hong = new CardBean(name1);
-		CardBean kim = new CardBean(name2);
+		CardBean kim = new CardBean(scanner.next());
 		
 		CardGame game = new CardGame(hong,kim);
-		System.out.println(game.getWinner());
+		
+		System.out.println(game.toString());
 	}
 }

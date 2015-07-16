@@ -16,30 +16,11 @@ public class CardBean {
 		this.name1 = name;
 		this.card1 = (int) ((Math.random()*13)+1);
 	}
-	
-	
 	//======= method
-
 	public String getName1() {
 		return name1;
 	}
 	public int getCard1() {
 		return card1;
-	}
-	public String getwinner() {
-		String winner = "" ;
-		if (card1 > card2) {
-			winner = "승자 : "+name1;
-		} else if (card1 < card2) {
-			winner = "승자 : "+name2;
-		} else {
-			winner = "동점";
-		}
-		return winner;
-	}
-	@Override
-	public String toString() {
-		return "["+name1+" : "+card1+"]\tvs\t["+this.name2+" : "
-					+card2+"]\n"+this.getwinner() ;
 	}
 }
