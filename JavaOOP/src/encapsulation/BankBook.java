@@ -29,7 +29,7 @@ public class BankBook implements Account{
 	//			스태틱 = 클래스 변수 
 	//			BankBook b = new BankBook();  b.bank = 인변이 값을 호출한것  BankBook.bank = 클래스변수 호출하는 모양
 	// 위치 : 필드 = {인변,상수,클래스변수} < 멤변
-	private static String BANK;
+	public static String BANK;
 	private int bankbookNo;
 	private String name;
 	private String msg; // 유효성체크 결과를 알려줘서 고객이 실수로 입력했다면 공지해주는 기능
