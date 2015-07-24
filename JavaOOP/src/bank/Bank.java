@@ -29,7 +29,6 @@ public class Bank implements BankRole{
 		bankBook.deposit(restMoney);
 		bankBookList[count] = (BankBook) bankBook; // 통장을 개설하자마자 은행전산 DB에 통장정보 저장개념
 		this.count++; //전체은행에 개설된통장 갯수 1증가
-		System.out.println(bankBook.showAccount());
 	}
 
 	@Override
@@ -49,13 +48,17 @@ public class Bank implements BankRole{
 
 	@Override
 	public BankBook[] searchAccountByname(String name) { //이름으로 계좌 검색
-		BankBook[] accounts = null;
+		
 		// searchAccountByName() 이 메서드를 호출하면
 		// 자동으로 searchCountByname() 을 먼저 호출하라
 		int tempcount = this.searchCountByname(name);
-		if (tempcount==0) { // 조회하는 사람의 통장이 하나도 없다면
+		if (tempcount == 0) {
 			return null;
 		}
+		//위처럼 필터링을 하는 이유는 본 알고리즘을 타기전에 필요없는 상태라면 알고리즘을 호출하지않기 위해서다
+		//그렇지 않으면 자원(리소스 : 메모리,DB)의 낭비를 초래한다.
+		BankBook[] accounts = new BankBook[tempcount];
+		tempcount = 0;
 		for (int i = 0; i < this.count; i++) {
 			if (bankBookList[i].getName().equals(name)) {
 				accounts[tempcount] = bankBookList[i];
@@ -81,12 +84,17 @@ public class Bank implements BankRole{
 	public boolean closeAccount(String accountNo) {
 		// flag 은 삭제가 성공적으로 이뤄지면 true를 리턴하고
 		// 삭제할것이 없으면 false 리턴
-		boolean flag = false;
+		boolean closeOk = false;
 		// String(문자열) 로 들어온 값을 숫자로 바꿔서 비교
+		BankBook bankBook = this.searchAccountByAccountNo(accountNo);
+		//필터링에서는  if-else 구문을 사용하지 않고 if문을 사용한다
+		if (bankBook == null) {
+			System.out.println("해당 계좌가 존재하지 않습니다.");
+			return closeOk;
+		}
 		int searcAccountNo = Integer.parseInt(accountNo);
 		for (int i = 0; i < this.count; i++) {
 			if (bankBookList[i].getBankbookNo()==searcAccountNo) {
-			flag = true;
 			//j = i 로 바꾼 이유 - 홍길동의 계좌가 은행전체계좌의 50번째라면
 			//내부 for 문에서 다시 처음부터 0부터 회전하지 않고
 			//홍길동의 계좌가 있는 인덱스 번호부터 뒤에 있는 계좌번호를 덮어쓰는 방식으로 진행한후
@@ -96,8 +104,9 @@ public class Bank implements BankRole{
 				bankBookList[i]= bankBookList[j+1];
 			}
 			count--;
+			closeOk = true;
 			}
 		}
-	return flag;
+	return closeOk;
 	}
 }
